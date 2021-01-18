@@ -1,6 +1,6 @@
-package pl.agh.cs.oop.jerzywilczek.gui;
+package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui;
 
-import pl.agh.cs.oop.jerzywilczek.model.map.PathfindingMap;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.PathfindingMap;
 
 public class MainView {
     private final MainController controller;

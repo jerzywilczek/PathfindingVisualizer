@@ -1,11 +1,11 @@
-package pl.agh.cs.oop.jerzywilczek;
+package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.agh.cs.oop.jerzywilczek.gui.MainController;
-import pl.agh.cs.oop.jerzywilczek.gui.MainView;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui.MainController;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui.MainView;
 
 import java.io.IOException;
 
@@ -19,7 +19,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainController.class.getResource("main.fxml"));
-        stage.setScene(new Scene(loader.load()));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
         view = new MainView(loader.getController());
         stage.show();
     }

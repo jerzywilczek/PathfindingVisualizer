@@ -1,13 +1,13 @@
-package pl.agh.cs.oop.jerzywilczek.gui;
+package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import pl.agh.cs.oop.jerzywilczek.model.map.Field;
-import pl.agh.cs.oop.jerzywilczek.model.map.FieldState;
-import pl.agh.cs.oop.jerzywilczek.model.map.FieldType;
-import pl.agh.cs.oop.jerzywilczek.model.map.PathfindingMap;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.Field;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.FieldState;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.FieldType;
+import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.PathfindingMap;
 
 import java.util.List;
 import java.util.Map;

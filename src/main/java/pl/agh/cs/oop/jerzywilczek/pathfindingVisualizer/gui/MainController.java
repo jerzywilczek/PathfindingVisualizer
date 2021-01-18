@@ -1,4 +1,4 @@
-package pl.agh.cs.oop.jerzywilczek.gui;
+package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
