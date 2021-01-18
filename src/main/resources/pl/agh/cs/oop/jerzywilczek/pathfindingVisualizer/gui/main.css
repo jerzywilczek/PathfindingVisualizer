@@ -1,0 +1,18 @@
+.root{
+    -fx-background-color: #6B6E70;
+    -fx-base: #86C232;
+    -fx-text-background-color: -fx-base;
+    -fx-text-base-color: #474B4F;
+    -fx-font-size: 20px;
+    -fx-font-family: "Quicksand Light";
+}
+
+.choice-box,
+.choice-box:focused,
+.button,
+.button:focused {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: -fx-base;
+}
