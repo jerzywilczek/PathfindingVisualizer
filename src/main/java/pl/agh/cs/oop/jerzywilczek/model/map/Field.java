@@ -11,4 +11,8 @@ public class Field {
     public Field(){
         this(FieldType.EMPTY);
     }
+
+    public void setFieldType(FieldType fieldType){
+        this.fieldType = fieldType;
+    }
 }

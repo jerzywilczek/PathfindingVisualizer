@@ -1,5 +1,7 @@
 package pl.agh.cs.oop.jerzywilczek.model.map;
 
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -57,5 +59,17 @@ public class PathfindingMap {
                             else
                                 map.put(position, new Field());
                         }));
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Map<Position, Field> getMap(){
+        return Collections.unmodifiableMap(map);
     }
 }
