@@ -1,8 +1,8 @@
-package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.generators;
+package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators;
 
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.Field;
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.FieldType;
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.PathfindingMap;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.Field;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
 import java.util.Collections;
 import java.util.List;

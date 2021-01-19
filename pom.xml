@@ -36,7 +36,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.App</mainClass>
+                    <mainClass>pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>

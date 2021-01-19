@@ -1,11 +1,11 @@
-package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer;
+package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui.MainController;
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.gui.MainView;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.MainController;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.MainView;
 
 import java.io.IOException;
 

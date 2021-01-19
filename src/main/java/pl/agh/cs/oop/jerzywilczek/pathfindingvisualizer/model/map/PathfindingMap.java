@@ -1,4 +1,4 @@
-package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map;
+package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map;
 
 
 import java.util.Collections;

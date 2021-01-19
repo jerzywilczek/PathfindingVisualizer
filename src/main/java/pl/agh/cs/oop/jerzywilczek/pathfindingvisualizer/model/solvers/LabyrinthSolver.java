@@ -1,6 +1,6 @@
-package pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.solvers;
+package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers;
 
-import pl.agh.cs.oop.jerzywilczek.pathfindingVisualizer.model.map.PathfindingMap;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
 import java.util.List;
 
