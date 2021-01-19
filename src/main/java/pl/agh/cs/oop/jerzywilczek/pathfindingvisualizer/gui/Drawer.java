@@ -27,7 +27,7 @@ public class Drawer {
     private final Color background = Color.web("#6B6E70");
 
 
-    public Drawer(Canvas canvas, PathfindingMap pathfindingMap){
+    public Drawer(Canvas canvas, PathfindingMap pathfindingMap) {
         this.canvas = canvas;
         this.context = canvas.getGraphicsContext2D();
         this.pathfindingMap = pathfindingMap;
@@ -36,31 +36,33 @@ public class Drawer {
         fieldHeight = canvas.getHeight() / pathfindingMap.getHeight();
     }
 
-    public void fullUpdate(){
+    public void fullUpdate() {
         pathfindingMap.getMap().forEach(this::drawField);
+        drawField(pathfindingMap.getStartPosition(), startEnd);
+        drawField(pathfindingMap.getEndPosition(), startEnd);
     }
 
-    public void updatePositions(List<PathfindingMap.Position> positions){
+    public void updatePositions(List<PathfindingMap.Position> positions) {
         positions.forEach(this::updatePosition);
     }
 
-    public void updatePosition(PathfindingMap.Position position){
+    public void updatePosition(PathfindingMap.Position position) {
         drawField(position, fields.get(position));
     }
 
-    private void drawField(PathfindingMap.Position position, Paint paint){
+    private void drawField(PathfindingMap.Position position, Paint paint) {
         context.setFill(paint);
         context.fillRect(position.x * fieldWidth, position.y * fieldHeight, fieldWidth + 1, fieldHeight + 1);
     }
 
-    private void drawField(PathfindingMap.Position position, Field field){
+    private void drawField(PathfindingMap.Position position, Field field) {
         drawField(position, findColor(field));
     }
 
-    public Color findColor(Field field){
-        if(field.getFieldType() == FieldType.WALL) return wall;
-        if(field.getFieldState() == FieldState.PROCESSED) return processed;
-        if(field.getFieldState() == FieldState.BEING_PROCESSED) return processed;
+    public Color findColor(Field field) {
+        if (field.getFieldType() == FieldType.WALL) return wall;
+        if (field.getFieldState() == FieldState.PROCESSED) return processed;
+        if (field.getFieldState() == FieldState.BEING_PROCESSED) return processed;
         return background;
     }
 }
