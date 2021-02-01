@@ -1,8 +1,8 @@
 .root{
-    -fx-background-color: #6B6E70;
+    -fx-background: #6B6E70;
     -fx-base: #86C232;
-    -fx-text-background-color: -fx-base;
-    -fx-text-base-color: #474B4F;
+    -fx-text-background-color: white;
+    -fx-text-base-color: white;
     -fx-font-size: 20px;
     -fx-font-family: "Quicksand Light";
 }
@@ -16,3 +16,18 @@
     -fx-background-insets: 0;
     -fx-border-color: -fx-base;
 }
+
+
+.choice-box .menu-item{
+    -fx-background-color: -fx-background;
+}
+
+.choice-box .menu-item:focused{
+    -fx-background-color: -fx-base;
+}
+
+.choice-box .context-menu{
+    -fx-background-color: -fx-background;
+    -fx-border-color: -fx-background;
+}
+

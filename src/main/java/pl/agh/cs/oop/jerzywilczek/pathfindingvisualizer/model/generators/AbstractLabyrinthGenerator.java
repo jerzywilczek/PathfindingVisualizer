@@ -4,30 +4,32 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.Field;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
-public abstract class LabyrinthGenerator {
+public abstract class AbstractLabyrinthGenerator {
     protected final PathfindingMap pathfindingMap;
-    private List<PathfindingMap.Position> walls;
-    public LabyrinthGenerator(PathfindingMap pathfindingMap){
+    private LinkedList<PathfindingMap.Position> walls;
+    public AbstractLabyrinthGenerator(PathfindingMap pathfindingMap){
         this.pathfindingMap = pathfindingMap;
-        this.walls = generateWalls();
+        walls = generateWalls();
+        writeToMap();
     }
 
-    public List<PathfindingMap.Position> getWalls(){
-        return Collections.unmodifiableList(walls);
+    public LinkedList<PathfindingMap.Position> getWalls(){
+        return new LinkedList<>(walls);
     }
 
     public void writeToMap(){
+        pathfindingMap.clear();
         Map<PathfindingMap.Position, Field> map = pathfindingMap.getMap();
         walls.forEach(position -> map.get(position).setFieldType(FieldType.WALL));
     }
 
     public void changeLabyrinth(){
         walls = generateWalls();
+        writeToMap();
     }
 
-    protected abstract List<PathfindingMap.Position> generateWalls();
+    protected abstract LinkedList<PathfindingMap.Position> generateWalls();
 }
