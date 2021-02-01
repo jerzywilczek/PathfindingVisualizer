@@ -9,6 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.AbstractLabyrinthGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.RecursiveDivisionGenerator;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.SimpleGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
 import java.util.List;
@@ -69,6 +70,7 @@ public class MainController {
         drawer.fullUpdate();
         AbstractLabyrinthGenerator generator = switch (generatorChoiceBox.getValue()) {
             case RECURSIVE -> new RecursiveDivisionGenerator(map);
+            case SIMPLE -> new SimpleGenerator(map);
         };
         new GenerationAnimator(generator.getWalls()).start();
     }
