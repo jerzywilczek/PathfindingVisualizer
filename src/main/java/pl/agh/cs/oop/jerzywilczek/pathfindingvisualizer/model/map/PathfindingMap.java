@@ -49,8 +49,12 @@ public class PathfindingMap {
             );
         this.width = width;
         this.height = height;
-        this.startPosition = this.new Position(1, 1);
-        this.endPosition = this.new Position(width - 2, height - 2);
+        clear();
+    }
+
+    public void clear() {
+        startPosition = this.new Position(1, 1);
+        endPosition = this.new Position(width - 2, height - 2);
 
         IntStream.range(0, width)
                 .forEach(x -> IntStream.range(0, height)
