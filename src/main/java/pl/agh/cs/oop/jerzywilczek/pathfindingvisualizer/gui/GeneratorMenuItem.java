@@ -1,8 +1,7 @@
 package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui;
 
 public enum GeneratorMenuItem {
-    RECURSIVE("Recursive"),
-    STH_ELSE("Sth else");
+    RECURSIVE("Recursive division");
 
     private final String name;
     GeneratorMenuItem(String name){

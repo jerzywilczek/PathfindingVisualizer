@@ -6,8 +6,10 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class AbstractLabyrinthGenerator {
+    protected final Random random = new Random();
     protected final PathfindingMap pathfindingMap;
     private LinkedList<PathfindingMap.Position> walls;
     public AbstractLabyrinthGenerator(PathfindingMap pathfindingMap){

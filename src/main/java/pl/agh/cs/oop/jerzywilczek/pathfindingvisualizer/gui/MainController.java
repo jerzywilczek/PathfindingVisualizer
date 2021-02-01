@@ -11,7 +11,6 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.Abstrac
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.RecursiveDivisionGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class MainController {
@@ -70,12 +69,6 @@ public class MainController {
         drawer.fullUpdate();
         AbstractLabyrinthGenerator generator = switch (generatorChoiceBox.getValue()) {
             case RECURSIVE -> new RecursiveDivisionGenerator(map);
-            case STH_ELSE -> new AbstractLabyrinthGenerator(map) {
-                @Override
-                protected LinkedList<PathfindingMap.Position> generateWalls() {
-                    return new LinkedList<>(pathfindingMap.getMap().keySet());
-                }
-            };
         };
         new GenerationAnimator(generator.getWalls()).start();
     }

@@ -1,6 +1,7 @@
 package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map;
 
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,14 @@ public class PathfindingMap {
                 );
             this.x = x;
             this.y = y;
+        }
+
+        public Position(int[] t){
+            this(t[0], t[1]);
+        }
+
+        public int[] toArray(){
+            return new int[] {x, y};
         }
 
         @Override
