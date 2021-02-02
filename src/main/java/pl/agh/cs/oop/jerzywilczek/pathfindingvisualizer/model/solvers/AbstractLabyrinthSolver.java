@@ -4,9 +4,9 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap
 
 import java.util.List;
 
-public abstract class LabyrinthSolver {
+public abstract class AbstractLabyrinthSolver {
     private PathfindingMap map;
-    public LabyrinthSolver(PathfindingMap map){
+    public AbstractLabyrinthSolver(PathfindingMap map){
         this.map = map;
     }
 

@@ -17,12 +17,19 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Label text="Automatic Labyrinth generation:" />
+                  <Label text="Automatic labyrinth generation:" />
                   <HBox spacing="5.0">
                      <children>
                         <ChoiceBox fx:id="generatorChoiceBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                         <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generate" text="Generate" />
                      </children></HBox>
+                  <Label layoutX="20.0" layoutY="20.0" text="Automatic labyrinth solving:" />
+                  <HBox layoutX="20.0" layoutY="56.0" spacing="5.0">
+                     <children>
+                        <ChoiceBox fx:id="solverChoiceBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" text="Solve" />
+                     </children>
+                  </HBox>
                </children></VBox>
             <Canvas fx:id="canvas" height="720.0" width="720.0" />
          </children>
