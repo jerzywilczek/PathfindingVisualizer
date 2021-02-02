@@ -20,8 +20,8 @@ public class Drawer {
     private final double fieldWidth;
     private final double fieldHeight;
 
-    private final Color processed = Color.web("#61892F");
-    private final Color startEnd = Color.web("#86C232");
+    private final Color startEnd = Color.web("#61892F");
+    private final Color processed = Color.web("#86C232");
     private final Color wall = Color.web("#222629");
     private final Color darkGray = Color.web("#474B4F");
     private final Color background = Color.web("#6B6E70");
