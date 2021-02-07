@@ -42,6 +42,15 @@ public class MainController implements AnimationFinishedObserver {
     private Button animationToggleButton;
 
     @FXML
+    private Button clearButton;
+
+    @FXML
+    private void clearMap(ActionEvent event){
+        map.clear();
+        drawer.fullUpdate();
+    }
+
+    @FXML
     private void initialize() {
         map = new PathfindingMap(50, 50);
         drawer = new Drawer(canvas, map);
@@ -59,7 +68,8 @@ public class MainController implements AnimationFinishedObserver {
                 solverChoiceBox,
                 solveButton,
                 skipButton,
-                animationToggleButton
+                animationToggleButton,
+                clearButton
         );
     }
 
