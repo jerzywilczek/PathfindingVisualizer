@@ -4,6 +4,7 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
 <AnchorPane onKeyPressed="#keyPressed" prefHeight="720.0" prefWidth="1280.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.MainController">
    <children>
@@ -48,6 +49,50 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
+                  <Label text="Legend:" />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faed26" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Your position" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="382.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f79e02" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Goal" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="418.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#86c232" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Fields that are being processed" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="454.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53900f" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Fields already processed" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="490.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#222629" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Walls" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="526.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6b6e70" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Empty fields" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="562.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#10e7dc" height="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+                        <Label text="Path" />
+                     </children>
+                  </HBox>
+                  
                </children></VBox>
             <Canvas fx:id="canvas" height="720.0" onMouseClicked="#canvasClicked" width="720.0" />
          </children>
