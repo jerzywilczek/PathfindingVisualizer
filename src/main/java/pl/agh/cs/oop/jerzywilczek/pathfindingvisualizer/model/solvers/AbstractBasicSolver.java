@@ -5,17 +5,13 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldState;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.Math.abs;
 
 public abstract class AbstractBasicSolver extends AbstractLabyrinthSolver{
-    private final Map<PathfindingMap.Position, PathfindingMap.Position> parent = new HashMap<>();
     private boolean finished = false;
-    private final PathfindingMap map;
 
     protected abstract PathfindingMap.Position getNext();
     protected abstract void queuePosition(PathfindingMap.Position position);
@@ -27,7 +23,6 @@ public abstract class AbstractBasicSolver extends AbstractLabyrinthSolver{
         initializeQueue();
         queuePosition(map.getStartPosition());
         parent.put(map.getStartPosition(), map.getStartPosition());
-        this.map = map;
     }
 
     @Override
@@ -65,26 +60,6 @@ public abstract class AbstractBasicSolver extends AbstractLabyrinthSolver{
     @Override
     public boolean finished() {
         return finished;
-    }
-
-    @Override
-    public List<PathfindingMap.Position> getSolvedPath() {
-        if(!parent.containsKey(map.getEndPosition()))
-            return new LinkedList<>();
-
-        PathfindingMap.Position current = map.getEndPosition();
-        map.getMap().get(current).setFieldState(FieldState.PATH);
-
-        LinkedList<PathfindingMap.Position> result = new LinkedList<>();
-        result.addFirst(current);
-
-        while(parent.containsKey(current) && current != map.getStartPosition()){
-            current = parent.get(current);
-            result.addLast(current);
-            map.getMap().get(current).setFieldState(FieldState.PATH);
-        }
-
-        return result;
     }
 
 }

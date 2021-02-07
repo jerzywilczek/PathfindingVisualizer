@@ -21,6 +21,7 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.SimpleG
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.Field;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.AStarSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.AbstractLabyrinthSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.BFSSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.DFSSolver;
@@ -100,6 +101,7 @@ public class MainController implements AnimationFinishedObserver {
         AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()) {
             case BFS -> new BFSSolver(map);
             case DFS -> new DFSSolver(map);
+            case A_STAR -> new AStarSolver(map);
         };
         setDisplayState(DisplayState.ANIMATING);
         animator.animateSolving(solver);
