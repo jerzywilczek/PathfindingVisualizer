@@ -15,7 +15,7 @@ public class SimpleGenerator extends AbstractLabyrinthGenerator{
     protected LinkedList<PathfindingMap.Position> generateWalls() {
         return IntStream.range(0, (int)(pathfindingMap.getWidth() * pathfindingMap.getHeight() * 0.3))
                 .mapToObj(i -> pathfindingMap.new Position(random.nextInt(pathfindingMap.getWidth()), random.nextInt(pathfindingMap.getHeight())))
-                .filter(position -> position != pathfindingMap.getStartPosition() && position != pathfindingMap.getEndPosition())
+                .filter(position -> !position.equals(pathfindingMap.getStartPosition()) && !position.equals(pathfindingMap.getEndPosition()))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 }
