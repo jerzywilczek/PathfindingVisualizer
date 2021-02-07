@@ -41,7 +41,7 @@
                      </VBox.margin>
                   </HBox>
                </children></VBox>
-            <Canvas fx:id="canvas" height="720.0" width="720.0" />
+            <Canvas fx:id="canvas" height="720.0" onMouseClicked="#canvasClicked" width="720.0" />
          </children>
       </HBox>
    </children>

@@ -6,12 +6,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
+import javafx.scene.input.MouseEvent;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.AnimationFinishedObserver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Animator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Drawer;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.AbstractLabyrinthGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.RecursiveDivisionGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.SimpleGenerator;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.Field;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.AbstractLabyrinthSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.BFSSolver;
@@ -34,6 +37,32 @@ public class MainController implements AnimationFinishedObserver {
 
     @FXML
     private Canvas canvas;
+
+    @FXML
+    private void canvasClicked(MouseEvent event){
+        if(animatingMode)
+            return;
+        double fieldWidth = canvas.getWidth() / map.getWidth(), fieldHeight = canvas.getHeight() / map.getHeight();
+        int x = (int) (event.getX() / fieldWidth), y = (int) (event.getY() / fieldHeight);
+        if(x != 0 &&
+           x!= map.getWidth() - 1 &&
+           y != 0 &&
+           y != map.getHeight() - 1
+        ){
+            PathfindingMap.Position position = map.new Position(x, y);
+
+            if (!position.equals(map.getStartPosition()) && !position.equals(map.getEndPosition())) {
+                Field field = map.getMap().get(position);
+
+                switch(field.getFieldType()){
+                    case EMPTY -> field.setFieldType(FieldType.WALL);
+                    case WALL -> field.setFieldType(FieldType.EMPTY);
+                }
+
+                drawer.fullUpdate();
+            }
+        }
+    }
 
     @FXML
     private Button generateButton;
