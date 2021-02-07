@@ -38,6 +38,8 @@ public abstract class AbstractBasicSolver extends AbstractLabyrinthSolver{
         }
         LinkedList<PathfindingMap.Position> result = new LinkedList<>();
         PathfindingMap.Position p = getNext();
+        map.getMap().get(p).setFieldState(FieldState.PROCESSED);
+        result.add(p);
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
                 if(abs(i+j) == 1){
@@ -46,7 +48,7 @@ public abstract class AbstractBasicSolver extends AbstractLabyrinthSolver{
                     Field field = map.getMap().get(child);
                     if((field.getFieldState() == FieldState.UNPROCESSED) && (field.getFieldType() != FieldType.WALL)){
                         queuePosition(child);
-                        field.setFieldState(FieldState.PROCESSED);
+                        field.setFieldState(FieldState.BEING_PROCESSED);
                         parent.put(child, p);
                         result.add(child);
                         if(child.equals(map.getEndPosition())){

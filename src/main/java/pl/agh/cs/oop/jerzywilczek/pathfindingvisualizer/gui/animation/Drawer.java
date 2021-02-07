@@ -19,9 +19,11 @@ public class Drawer {
     private final double fieldWidth;
     private final double fieldHeight;
 
-    private final Color startEnd = Color.web("#FAED26");
+    private final Color start = Color.web("#FAED26");
+    private final Color end = Color.web("#F79E02");
     private final Color darkGreen =  Color.web("#61892F");
-    private final Color processed = Color.web("#86C232");
+    private final Color beingProcessed = Color.web("#86C232");
+    private final Color processed = Color.web("#53900F");
     private final Color wall = Color.web("#222629");
     private final Color darkGray = Color.web("#474B4F");
     private final Color background = Color.web("#6B6E70");
@@ -40,8 +42,8 @@ public class Drawer {
 
     public void fullUpdate() {
         pathfindingMap.getMap().forEach(this::drawField);
-        drawField(pathfindingMap.getStartPosition(), startEnd);
-        drawField(pathfindingMap.getEndPosition(), startEnd);
+        drawField(pathfindingMap.getStartPosition(), start);
+        drawField(pathfindingMap.getEndPosition(), end);
     }
 
     public void updatePositions(List<PathfindingMap.Position> positions) {
@@ -49,8 +51,10 @@ public class Drawer {
     }
 
     public void updatePosition(PathfindingMap.Position position) {
-        if(position.equals(pathfindingMap.getStartPosition()) || position.equals(pathfindingMap.getEndPosition()))
-            drawField(position, startEnd);
+        if(position.equals(pathfindingMap.getStartPosition()))
+            drawField(position, start);
+        else if(position.equals(pathfindingMap.getEndPosition()))
+            drawField(position, end);
         else
             drawField(position, fields.get(position));
     }
@@ -68,7 +72,8 @@ public class Drawer {
         if (field.getFieldType() == FieldType.WALL) return wall;
         return switch(field.getFieldState()){
             case PATH -> path;
-            case PROCESSED, BEING_PROCESSED -> processed;
+            case PROCESSED -> processed;
+            case BEING_PROCESSED -> beingProcessed;
             case UNPROCESSED -> background;
         };
     }
