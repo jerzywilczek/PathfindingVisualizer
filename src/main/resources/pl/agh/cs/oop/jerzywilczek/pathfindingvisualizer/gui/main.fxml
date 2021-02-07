@@ -30,6 +30,13 @@
                         <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefWidth="120.0" text="Solve" />
                      </children>
                   </HBox>
+                  <Label layoutX="20.0" layoutY="108.0" text="Change map size:" />
+                  <HBox layoutX="20.0" layoutY="144.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="mapSizeInputField" onAction="#resizeMap" promptText="Enter new map size" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="resizeButton" mnemonicParsing="false" onAction="#resizeMap" prefWidth="120.0" text="Resize" />
+                     </children>
+                  </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
                         <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearMap" text="Clear map" />

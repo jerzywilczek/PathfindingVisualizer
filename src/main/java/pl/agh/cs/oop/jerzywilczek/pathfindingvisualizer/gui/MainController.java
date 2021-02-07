@@ -2,12 +2,16 @@ package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.AnimationFinishedObserver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Animator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Drawer;
@@ -21,6 +25,7 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.AbstractLa
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.BFSSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.DFSSolver;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainController implements AnimationFinishedObserver {
@@ -95,6 +100,30 @@ public class MainController implements AnimationFinishedObserver {
     }
 
     @FXML
+    private TextField mapSizeInputField;
+
+    @FXML
+    private Button resizeButton;
+
+    @FXML
+    private void resizeMap(ActionEvent event){
+        int newSize;
+        try{
+            newSize = Integer.parseInt(mapSizeInputField.getText());
+        } catch(NumberFormatException exception){
+            showPopup("Please input a correct number", "Error!");
+            return;
+        }
+
+        if(newSize < 4){
+            showPopup("Map can't be smaller than 4", "Error!");
+            return;
+        }
+
+        initializeMap(newSize);
+    }
+
+    @FXML
     private Button skipButton;
 
     @FXML
@@ -123,10 +152,7 @@ public class MainController implements AnimationFinishedObserver {
 
     @FXML
     private void initialize() {
-        map = new PathfindingMap(50, 50);
-        drawer = new Drawer(canvas, map);
-        animator = new Animator(drawer);
-        animator.addObserver(this);
+        initializeMap(50);
 
         generatorChoiceBox.getItems().addAll(GeneratorMenuItem.values());
         generatorChoiceBox.setValue(GeneratorMenuItem.values()[0]);
@@ -138,6 +164,8 @@ public class MainController implements AnimationFinishedObserver {
                 generateButton,
                 solverChoiceBox,
                 solveButton,
+                mapSizeInputField,
+                resizeButton,
                 skipButton,
                 animationToggleButton,
                 clearButton
@@ -157,7 +185,7 @@ public class MainController implements AnimationFinishedObserver {
     }
 
     @FXML
-    public void keyPressed(KeyEvent keyEvent) {
+    private void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case A -> map.offsetStart(-1, 0);
             case W -> map.offsetStart(0, -1);
@@ -167,8 +195,34 @@ public class MainController implements AnimationFinishedObserver {
             }
         }
         if (map.getStartPosition().equals(map.getEndPosition())) {
+            drawer.fullUpdate();
+            showPopup("You won!", "Congratulations!");
             map.clear();
         }
         drawer.fullUpdate();
+    }
+
+    private void showPopup(String message, String title) {
+        FXMLLoader loader = new FXMLLoader(Popup.class.getResource("popup.fxml"));
+        try {
+            Scene scene = new Scene(loader.load());
+            ((Popup)loader.getController()).setText(message);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.showAndWait();
+        } catch (IOException exception) {
+            exception.printStackTrace(); // this should never happen to a user
+        }
+    }
+
+    private void initializeMap(int mapSize){
+        map = new PathfindingMap(mapSize, mapSize);
+        drawer = new Drawer(canvas, map);
+        if (animator != null) {
+            animator.removeObserver(this);
+        }
+        animator = new Animator(drawer);
+        animator.addObserver(this);
     }
 }
