@@ -39,6 +39,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
+                        <Button fx:id="resetButton" disable="true" mnemonicParsing="false" onAction="#reset" text="Reset" />
                         <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearMap" text="Clear map" />
                         <Button fx:id="animationToggleButton" disable="true" mnemonicParsing="false" onAction="#animationToggle" text="Stop/Start" />
                         <Button fx:id="skipButton" disable="true" mnemonicParsing="false" onAction="#skip" prefWidth="120.0" text="Skip" />

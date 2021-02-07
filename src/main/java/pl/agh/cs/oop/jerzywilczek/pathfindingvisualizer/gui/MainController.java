@@ -34,7 +34,13 @@ public class MainController implements AnimationFinishedObserver {
     private Drawer drawer;
     private List<Control> controls;
     private Animator animator;
-    private boolean animatingMode = false;
+    private DisplayState displayState = DisplayState.NORMAL;
+
+    private enum DisplayState {
+        NORMAL,
+        ANIMATING,
+        INTER_ALGORITHM
+    }
 
     @FXML
     private ChoiceBox<GeneratorMenuItem> generatorChoiceBox;
@@ -47,7 +53,7 @@ public class MainController implements AnimationFinishedObserver {
 
     @FXML
     private void canvasClicked(MouseEvent event) {
-        if (animatingMode)
+        if (displayState != DisplayState.NORMAL)
             return;
         double fieldWidth = canvas.getWidth() / map.getWidth(), fieldHeight = canvas.getHeight() / map.getHeight();
         int x = (int) (event.getX() / fieldWidth), y = (int) (event.getY() / fieldHeight);
@@ -82,7 +88,7 @@ public class MainController implements AnimationFinishedObserver {
             case RECURSIVE -> new RecursiveDivisionGenerator(map);
             case SIMPLE -> new SimpleGenerator(map);
         };
-        setAnimatingMode(true);
+        setDisplayState(DisplayState.ANIMATING);
         animator.animateBatch(generator.getWalls());
     }
 
@@ -95,7 +101,7 @@ public class MainController implements AnimationFinishedObserver {
             case BFS -> new BFSSolver(map);
             case DFS -> new DFSSolver(map);
         };
-        setAnimatingMode(true);
+        setDisplayState(DisplayState.ANIMATING);
         animator.animateSolving(solver);
     }
 
@@ -148,6 +154,17 @@ public class MainController implements AnimationFinishedObserver {
     private void clearMap(ActionEvent event) {
         map.clear();
         drawer.fullUpdate();
+        setDisplayState(DisplayState.NORMAL);
+    }
+
+    @FXML
+    private Button resetButton;
+
+    @FXML
+    private void reset(ActionEvent event){
+        map.resetProgress();
+        drawer.fullUpdate();
+        setDisplayState(DisplayState.NORMAL);
     }
 
     @FXML
@@ -168,24 +185,41 @@ public class MainController implements AnimationFinishedObserver {
                 resizeButton,
                 skipButton,
                 animationToggleButton,
-                clearButton
+                clearButton,
+                resetButton
         );
     }
 
-    private void setAnimatingMode(boolean value) {
-        controls.forEach(control -> control.setDisable(value));
-        skipButton.setDisable(!value);
-        animationToggleButton.setDisable(!value);
-        animatingMode = value;
+    private void setDisplayState(DisplayState mode){
+        displayState = mode;
+        switch(mode){
+            case NORMAL -> {
+                controls.forEach(control -> control.setDisable(false));
+                List.of(skipButton, animationToggleButton, resetButton).forEach(control -> control.setDisable(true));
+            }
+            case ANIMATING -> {
+                controls.forEach(control -> control.setDisable(true));
+                List.of(skipButton, animationToggleButton).forEach(control -> control.setDisable(false));
+            }
+            case INTER_ALGORITHM -> {
+                controls.forEach(control -> control.setDisable(true));
+                List.of(resetButton, clearButton).forEach(control -> control.setDisable(false));
+            }
+        }
     }
 
     @Override
-    public void animationFinished() {
-        setAnimatingMode(false);
+    public void animationFinished(boolean solving) {
+        if(solving)
+            setDisplayState(DisplayState.INTER_ALGORITHM);
+        else
+            setDisplayState(DisplayState.NORMAL);
     }
 
     @FXML
     private void keyPressed(KeyEvent keyEvent) {
+        if(displayState != DisplayState.NORMAL)
+            return;
         switch (keyEvent.getCode()) {
             case A -> map.offsetStart(-1, 0);
             case W -> map.offsetStart(0, -1);

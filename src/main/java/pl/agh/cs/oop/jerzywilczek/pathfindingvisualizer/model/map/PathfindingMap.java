@@ -120,4 +120,8 @@ public class PathfindingMap {
         }
     }
 
+    public void resetProgress(){
+        map.values().forEach(field -> field.setFieldState(FieldState.UNPROCESSED));
+    }
+
 }

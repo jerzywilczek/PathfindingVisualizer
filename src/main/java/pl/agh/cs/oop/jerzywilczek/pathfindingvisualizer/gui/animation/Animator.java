@@ -12,6 +12,7 @@ public class Animator {
     private boolean running = false;
     private final Drawer drawer;
     private final List<AnimationFinishedObserver> animationFinishedObservers = new LinkedList<>();
+    private boolean solvingAnimation = false;
 
     public Animator(Drawer drawer) {
         this.drawer = drawer;
@@ -33,6 +34,7 @@ public class Animator {
 
     public void animateSolving(AbstractLabyrinthSolver solver) {
         prepareAnimation();
+        solvingAnimation = true;
         currentAnimation = new StepAnimator(solver);
         currentAnimation.start();
     }
@@ -48,7 +50,8 @@ public class Animator {
         currentAnimation.stop();
         currentAnimation = null;
         running = false;
-        animationFinishedObservers.forEach(AnimationFinishedObserver::animationFinished);
+        animationFinishedObservers.forEach(observer -> observer.animationFinished(solvingAnimation));
+        solvingAnimation = false;
     }
 
     public void skip() {
