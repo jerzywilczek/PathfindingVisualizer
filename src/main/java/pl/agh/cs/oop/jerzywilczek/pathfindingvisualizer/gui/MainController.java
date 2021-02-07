@@ -19,6 +19,7 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.AbstractLabyrinthSolver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.BFSSolver;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.DFSSolver;
 
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class MainController implements AnimationFinishedObserver {
     private void solve(ActionEvent event) {
         AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()) {
             case BFS -> new BFSSolver(map);
+            case DFS -> new DFSSolver(map);
         };
         setAnimatingMode(true);
         animator.animateSolving(solver);

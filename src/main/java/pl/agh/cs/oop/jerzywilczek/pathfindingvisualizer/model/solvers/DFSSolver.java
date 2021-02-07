@@ -4,30 +4,30 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap
 
 import java.util.LinkedList;
 
-public class BFSSolver extends AbstractBasicSolver {
-    private LinkedList<PathfindingMap.Position> queue;
+public class DFSSolver extends AbstractBasicSolver {
+    private LinkedList<PathfindingMap.Position> stack;
 
-    public BFSSolver(PathfindingMap map) {
+    public DFSSolver(PathfindingMap map) {
         super(map);
     }
 
     @Override
     protected PathfindingMap.Position getNext() {
-        return queue.pop();
+        return stack.pop();
     }
 
     @Override
     protected void queuePosition(PathfindingMap.Position position) {
-        queue.addLast(position);
+        stack.addFirst(position);
     }
 
     @Override
     protected boolean queueEmpty() {
-        return queue.isEmpty();
+        return stack.isEmpty();
     }
 
     @Override
     protected void initializeQueue() {
-        queue = new LinkedList<>();
+        stack = new LinkedList<>();
     }
 }

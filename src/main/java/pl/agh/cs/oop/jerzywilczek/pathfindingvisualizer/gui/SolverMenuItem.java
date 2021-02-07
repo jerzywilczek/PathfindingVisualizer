@@ -1,7 +1,8 @@
 package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui;
 
 public enum SolverMenuItem {
-    BFS("BFS");
+    BFS("BFS"),
+    DFS("DFS");
 
 
     private final String name;
