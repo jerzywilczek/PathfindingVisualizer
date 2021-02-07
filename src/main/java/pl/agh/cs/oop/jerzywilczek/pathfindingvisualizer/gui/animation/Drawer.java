@@ -1,11 +1,10 @@
-package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui;
+package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.Field;
-import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldState;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.FieldType;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.map.PathfindingMap;
 
@@ -20,20 +19,23 @@ public class Drawer {
     private final double fieldWidth;
     private final double fieldHeight;
 
-    private final Color startEnd = Color.web("#61892F");
+    private final Color startEnd = Color.web("#FAED26");
+    private final Color darkGreen =  Color.web("#61892F");
     private final Color processed = Color.web("#86C232");
     private final Color wall = Color.web("#222629");
     private final Color darkGray = Color.web("#474B4F");
     private final Color background = Color.web("#6B6E70");
+    private final Color path = Color.web("#10E7DC");
 
 
     public Drawer(Canvas canvas, PathfindingMap pathfindingMap) {
         this.canvas = canvas;
-        this.context = canvas.getGraphicsContext2D();
         this.pathfindingMap = pathfindingMap;
-        this.fields = pathfindingMap.getMap();
+        context = canvas.getGraphicsContext2D();
+        fields = pathfindingMap.getMap();
         fieldWidth = canvas.getWidth() /  pathfindingMap.getWidth();
         fieldHeight = canvas.getHeight() / pathfindingMap.getHeight();
+        fullUpdate();
     }
 
     public void fullUpdate() {
@@ -47,7 +49,10 @@ public class Drawer {
     }
 
     public void updatePosition(PathfindingMap.Position position) {
-        drawField(position, fields.get(position));
+        if(position.equals(pathfindingMap.getStartPosition()) || position.equals(pathfindingMap.getEndPosition()))
+            drawField(position, startEnd);
+        else
+            drawField(position, fields.get(position));
     }
 
     private void drawField(PathfindingMap.Position position, Paint paint) {
@@ -61,8 +66,10 @@ public class Drawer {
 
     public Color findColor(Field field) {
         if (field.getFieldType() == FieldType.WALL) return wall;
-        if (field.getFieldState() == FieldState.PROCESSED) return processed;
-        if (field.getFieldState() == FieldState.BEING_PROCESSED) return processed;
-        return background;
+        return switch(field.getFieldState()){
+            case PATH -> path;
+            case PROCESSED, BEING_PROCESSED -> processed;
+            case UNPROCESSED -> background;
+        };
     }
 }

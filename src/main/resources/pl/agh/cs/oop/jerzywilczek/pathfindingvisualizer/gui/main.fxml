@@ -21,14 +21,23 @@
                   <HBox spacing="5.0">
                      <children>
                         <ChoiceBox fx:id="generatorChoiceBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generate" text="Generate" />
+                        <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generate" prefWidth="120.0" text="Generate" />
                      </children></HBox>
                   <Label layoutX="20.0" layoutY="20.0" text="Automatic labyrinth solving:" />
                   <HBox layoutX="20.0" layoutY="56.0" spacing="5.0">
                      <children>
                         <ChoiceBox fx:id="solverChoiceBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" text="Solve" />
+                        <Button fx:id="solveButton" mnemonicParsing="false" onAction="#solve" prefWidth="120.0" text="Solve" />
                      </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                     <children>
+                        <Button fx:id="animationToggleButton" disable="true" mnemonicParsing="false" onAction="#animationToggle" prefWidth="150.0" text="Stop/Start" />
+                        <Button fx:id="skipButton" disable="true" mnemonicParsing="false" onAction="#skip" prefWidth="120.0" text="Skip" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </HBox>
                </children></VBox>
             <Canvas fx:id="canvas" height="720.0" width="720.0" />

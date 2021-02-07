@@ -59,15 +59,21 @@ public class BFSSolver extends AbstractLabyrinthSolver {
 
     @Override
     public List<PathfindingMap.Position> getSolvedPath() {
-        if(parent.containsKey(map.getEndPosition()))
+        if(!parent.containsKey(map.getEndPosition()))
             return new LinkedList<>();
+
         PathfindingMap.Position current = map.getEndPosition();
+        map.getMap().get(current).setFieldState(FieldState.PATH);
+
         LinkedList<PathfindingMap.Position> result = new LinkedList<>();
         result.addFirst(current);
+
         while(parent.containsKey(current) && current != map.getStartPosition()){
             current = parent.get(current);
-            result.addFirst(current);
+            result.addLast(current);
+            map.getMap().get(current).setFieldState(FieldState.PATH);
         }
+
         return result;
     }
 }

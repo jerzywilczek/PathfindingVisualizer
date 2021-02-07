@@ -1,12 +1,14 @@
 package pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui;
 
-import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.AnimationFinishedObserver;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Animator;
+import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Drawer;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.AbstractLabyrinthGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.RecursiveDivisionGenerator;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.generators.SimpleGenerator;
@@ -16,48 +18,13 @@ import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.model.solvers.BFSSolver;
 
 import java.util.List;
 
-public class MainController {
+public class MainController implements AnimationFinishedObserver {
 
     private PathfindingMap map;
     private Drawer drawer;
     private List<Control> controls;
-
-    private class GenerationAnimator extends AnimationTimer{
-        private final List<PathfindingMap.Position> walls;
-        public GenerationAnimator(List<PathfindingMap.Position> walls){
-            this.walls = walls;
-            setControlsDisable(true);
-        }
-
-        @Override
-        public void handle(long now) {
-            if(walls.isEmpty()){
-                setControlsDisable(false);
-                this.stop();
-                return;
-            }
-            drawer.updatePosition(walls.remove(0));
-        }
-    }
-
-    private class SolvingAnimator extends AnimationTimer{
-        private final AbstractLabyrinthSolver solver;
-
-        public SolvingAnimator(AbstractLabyrinthSolver solver){
-            this.solver = solver;
-            setControlsDisable(true);
-        }
-
-        @Override
-        public void handle(long now) {
-            if(solver.finished()){
-                setControlsDisable(false);
-                this.stop();
-                return;
-            }
-            drawer.updatePositions(solver.nextStep());
-        }
-    }
+    private Animator animator;
+    private boolean animatingMode = false;
 
     @FXML
     private Canvas canvas;
@@ -69,48 +36,85 @@ public class MainController {
     private Button generateButton;
 
     @FXML
-    private void initialize(){
-        this.map = new PathfindingMap(50, 50);
-        this.drawer = new Drawer(canvas, map);
-        drawer.fullUpdate();
+    private Button skipButton;
+
+    @FXML
+    private Button animationToggleButton;
+
+    @FXML
+    private void initialize() {
+        map = new PathfindingMap(50, 50);
+        drawer = new Drawer(canvas, map);
+        animator = new Animator(drawer);
+        animator.addObserver(this);
+
         generatorChoiceBox.getItems().addAll(GeneratorMenuItem.values());
         generatorChoiceBox.setValue(GeneratorMenuItem.values()[0]);
         solverChoiceBox.getItems().addAll(SolverMenuItem.values());
         solverChoiceBox.setValue(SolverMenuItem.values()[0]);
+
         controls = List.of(
                 generatorChoiceBox,
                 generateButton,
                 solverChoiceBox,
-                solveButton
+                solveButton,
+                skipButton,
+                animationToggleButton
         );
     }
 
-    private void setControlsDisable(boolean value){
+    private void setAnimatingMode(boolean value) {
+        controls.forEach(control -> control.setDisable(value));
+        skipButton.setDisable(!value);
+        animationToggleButton.setDisable(!value);
+        animatingMode = value;
+    }
+
+    private void setControlsDisable(boolean value) {
         controls.forEach(control -> control.setDisable(value));
     }
 
     @FXML
-    private void generate(ActionEvent event){
+    private void generate(ActionEvent event) {
         map.clear();
         drawer.fullUpdate();
         AbstractLabyrinthGenerator generator = switch (generatorChoiceBox.getValue()) {
             case RECURSIVE -> new RecursiveDivisionGenerator(map);
             case SIMPLE -> new SimpleGenerator(map);
         };
-        new GenerationAnimator(generator.getWalls()).start();
+        setAnimatingMode(true);
+        animator.animateBatch(generator.getWalls());
     }
 
     @FXML
     private Button solveButton;
 
     @FXML
-    private void solve(ActionEvent event){
-        AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()){
+    private void solve(ActionEvent event) {
+        AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()) {
             case BFS -> new BFSSolver(map);
         };
-        new SolvingAnimator(solver).start();
+        setAnimatingMode(true);
+        animator.animateSolving(solver);
+    }
+
+    @FXML
+    private void skip(ActionEvent event) {
+        if (animator.isAnimating()) {
+            animator.skip();
+        }
+    }
+
+    @FXML
+    private void animationToggle(ActionEvent event) {
+        animator.toggleRunning();
     }
 
     @FXML
     private ChoiceBox<SolverMenuItem> solverChoiceBox;
+
+    @Override
+    public void animationFinished() {
+        setAnimatingMode(false);
+    }
 }
