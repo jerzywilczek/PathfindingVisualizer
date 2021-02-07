@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.AnimationFinishedObserver;
 import pl.agh.cs.oop.jerzywilczek.pathfindingvisualizer.gui.animation.Animator;
@@ -39,22 +40,22 @@ public class MainController implements AnimationFinishedObserver {
     private Canvas canvas;
 
     @FXML
-    private void canvasClicked(MouseEvent event){
-        if(animatingMode)
+    private void canvasClicked(MouseEvent event) {
+        if (animatingMode)
             return;
         double fieldWidth = canvas.getWidth() / map.getWidth(), fieldHeight = canvas.getHeight() / map.getHeight();
         int x = (int) (event.getX() / fieldWidth), y = (int) (event.getY() / fieldHeight);
-        if(x != 0 &&
-           x!= map.getWidth() - 1 &&
-           y != 0 &&
-           y != map.getHeight() - 1
-        ){
+        if (x != 0 &&
+            x != map.getWidth() - 1 &&
+            y != 0 &&
+            y != map.getHeight() - 1
+        ) {
             PathfindingMap.Position position = map.new Position(x, y);
 
             if (!position.equals(map.getStartPosition()) && !position.equals(map.getEndPosition())) {
                 Field field = map.getMap().get(position);
 
-                switch(field.getFieldType()){
+                switch (field.getFieldType()) {
                     case EMPTY -> field.setFieldType(FieldType.WALL);
                     case WALL -> field.setFieldType(FieldType.EMPTY);
                 }
@@ -113,7 +114,7 @@ public class MainController implements AnimationFinishedObserver {
     private Button clearButton;
 
     @FXML
-    private void clearMap(ActionEvent event){
+    private void clearMap(ActionEvent event) {
         map.clear();
         drawer.fullUpdate();
     }
@@ -151,5 +152,21 @@ public class MainController implements AnimationFinishedObserver {
     @Override
     public void animationFinished() {
         setAnimatingMode(false);
+    }
+
+    @FXML
+    public void keyPressed(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+            case A -> map.offsetStart(-1, 0);
+            case W -> map.offsetStart(0, -1);
+            case D -> map.offsetStart(1, 0);
+            case S -> map.offsetStart(0, 1);
+            default -> {
+            }
+        }
+        if (map.getStartPosition().equals(map.getEndPosition())) {
+            map.clear();
+        }
+        drawer.fullUpdate();
     }
 }

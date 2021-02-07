@@ -113,5 +113,11 @@ public class PathfindingMap {
         this.endPosition = endPosition;
     }
 
+    public void offsetStart(int xOffset, int yOffset){
+        Position newPosition = this.new Position(startPosition.x + xOffset, startPosition.y + yOffset);
+        if(map.get(newPosition).getFieldType() != FieldType.WALL){
+            setStartPosition(newPosition);
+        }
+    }
 
 }
