@@ -27,19 +27,58 @@ public class MainController implements AnimationFinishedObserver {
     private boolean animatingMode = false;
 
     @FXML
-    private Canvas canvas;
+    private ChoiceBox<GeneratorMenuItem> generatorChoiceBox;
 
     @FXML
-    private ChoiceBox<GeneratorMenuItem> generatorChoiceBox;
+    private ChoiceBox<SolverMenuItem> solverChoiceBox;
+
+    @FXML
+    private Canvas canvas;
 
     @FXML
     private Button generateButton;
 
     @FXML
+    private void generate(ActionEvent event) {
+        map.clear();
+        drawer.fullUpdate();
+        AbstractLabyrinthGenerator generator = switch (generatorChoiceBox.getValue()) {
+            case RECURSIVE -> new RecursiveDivisionGenerator(map);
+            case SIMPLE -> new SimpleGenerator(map);
+        };
+        setAnimatingMode(true);
+        animator.animateBatch(generator.getWalls());
+    }
+
+    @FXML
+    private Button solveButton;
+
+    @FXML
+    private void solve(ActionEvent event) {
+        AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()) {
+            case BFS -> new BFSSolver(map);
+        };
+        setAnimatingMode(true);
+        animator.animateSolving(solver);
+    }
+
+    @FXML
     private Button skipButton;
 
     @FXML
+    private void skip(ActionEvent event) {
+        if (animator.isAnimating()) {
+            animator.skip();
+        }
+    }
+
+    @FXML
     private Button animationToggleButton;
+
+    @FXML
+    private void animationToggle(ActionEvent event) {
+        animator.toggleRunning();
+    }
 
     @FXML
     private Button clearButton;
@@ -79,49 +118,6 @@ public class MainController implements AnimationFinishedObserver {
         animationToggleButton.setDisable(!value);
         animatingMode = value;
     }
-
-    private void setControlsDisable(boolean value) {
-        controls.forEach(control -> control.setDisable(value));
-    }
-
-    @FXML
-    private void generate(ActionEvent event) {
-        map.clear();
-        drawer.fullUpdate();
-        AbstractLabyrinthGenerator generator = switch (generatorChoiceBox.getValue()) {
-            case RECURSIVE -> new RecursiveDivisionGenerator(map);
-            case SIMPLE -> new SimpleGenerator(map);
-        };
-        setAnimatingMode(true);
-        animator.animateBatch(generator.getWalls());
-    }
-
-    @FXML
-    private Button solveButton;
-
-    @FXML
-    private void solve(ActionEvent event) {
-        AbstractLabyrinthSolver solver = switch (solverChoiceBox.getValue()) {
-            case BFS -> new BFSSolver(map);
-        };
-        setAnimatingMode(true);
-        animator.animateSolving(solver);
-    }
-
-    @FXML
-    private void skip(ActionEvent event) {
-        if (animator.isAnimating()) {
-            animator.skip();
-        }
-    }
-
-    @FXML
-    private void animationToggle(ActionEvent event) {
-        animator.toggleRunning();
-    }
-
-    @FXML
-    private ChoiceBox<SolverMenuItem> solverChoiceBox;
 
     @Override
     public void animationFinished() {
